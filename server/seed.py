@@ -35,14 +35,14 @@ if __name__ == '__main__':
         ]
 
         db.session.add_all(heroes)
-
+        db.session.commit()
         print("Adding powers to heroes...")
         strengths = ["Strong", "Weak", "Average"]
         hero_powers = []
         for hero in heroes:
             power = rc(powers)
             hero_powers.append(
-                HeroPower(hero=hero, power=power, strength=rc(strengths))
+                HeroPower(hero_id=hero.id, power_id=power.id, strength=rc(strengths))
             )
         db.session.add_all(hero_powers)
         db.session.commit()
