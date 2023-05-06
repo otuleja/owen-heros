@@ -21,8 +21,17 @@ class Hero(db.Model):
             "id" : self.id,
             "name": self.name,
             "super_name": self.super_name,
-
-            "powers": self.powers
+        }
+    
+    def show_dict_with_powers(self): 
+        my_powers = []
+        for power in self.powers:
+            my_powers.append(power.to_dict())
+        return {
+            "id" : self.id,
+            "name": self.name,
+            "super_name": self.super_name,
+            "powers": my_powers
         }
 
 class HeroPower(db.Model):
@@ -57,7 +66,7 @@ class Power(db.Model):
     name = db.Column(db.String)    
     description = db.Column(db.String)
     hero_power = db.relationship("HeroPower" , backref = "power" )
-    heroes = association_proxy("hero_power", "hero")
+    heroes = association_proxy("hero_power", "heroes")
 
     @validates("strength")
     def validate(self, key , value):
@@ -70,7 +79,7 @@ class Power(db.Model):
             "id": self.id,
             "name": self.name,
             "description": self.description,
-            "hero_power": self.hero_power,
-            "heroes": self.heroes
+            # "hero_power": self.hero_power,
+            # "heroes": self.heroes
         }
 # add any models you may need. 

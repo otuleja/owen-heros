@@ -16,19 +16,17 @@ db.init_app(app)
 
 @app.route('/')
 def home():
-    return ''
+    return 'yooo'
 
 @app.get("/heroes")
 def get_hero():
     heroes = Hero.query.all()
-    print(heroes)
     return [hero.to_dict() for hero in heroes]
 
-# app.get("/heroes/<int:id>")
-# def get_heroes(id):
-    
-#         hero =Hero.query.get(id)
-#         return hero.to_dict()
+@app.get("/heroes/<int:id>")
+def get_heroes(id):
+        hero = Hero.query.get(id)
+        return hero.show_dict_with_powers()
     
     
 # @app.get("/powers")
