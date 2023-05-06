@@ -10,18 +10,18 @@ class Hero(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
     super_name = db.Column(db.String)
-    heropower = db.relationship("HeroPower" , backref = "heroes" )
-    powers = association_proxy("heropowers", "power")
+    hero_power = db.relationship("HeroPower" , backref = "heroes" )
+    powers = association_proxy("hero_power", "power")
 
     def __repr__(self):
-        return f"<Hero: id = {self.id}, name = {self.name} super_name = {self.super_name}, heropower = {self.heropower} powers = {self.powers}>"
+        return f"<Hero: id = {self.id}, name = {self.name} super_name = {self.super_name}, powers = {self.powers}>"
     
     def to_dict(self):
         return{
             "id" : self.id,
             "name": self.name,
             "super_name": self.super_name,
-            "heropower": self.heropower,
+
             "powers": self.powers
         }
 
@@ -30,12 +30,12 @@ class HeroPower(db.Model):
 
     id = db.Column(db.Integer, primary_key = True)
     strength = db.Column(db.String) 
-    hero_id = db.Column(db.Integer, db.ForeignKey("hero.id"))
+    hero_id = db.Column(db.Integer, db.ForeignKey("heroes.id"))
     power_id = db.Column(db.Integer, db.ForeignKey("power.id"))
 
     @validates("strength")
     def validate(self, key , value):
-        if value != "Strong" or value != "weak" or value != "Average":
+        if value != "Strong" and value != "Weak" and value != "Average":
             raise ValueError ("strength must be on of the following Values Strong, Weak, or Average")
         return value
     
@@ -56,8 +56,8 @@ class Power(db.Model):
     id = db.Column(db.Integer, primary_key=True)  
     name = db.Column(db.String)    
     description = db.Column(db.String)
-    heropower = db.relationship("HeroPowers" , backref = "power" )
-    heroes = association_proxy("heropowers", "hero")
+    hero_power = db.relationship("HeroPower" , backref = "power" )
+    heroes = association_proxy("hero_power", "hero")
 
     @validates("strength")
     def validate(self, key , value):
@@ -70,7 +70,7 @@ class Power(db.Model):
             "id": self.id,
             "name": self.name,
             "description": self.description,
-            "heropower": self.heropower,
+            "hero_power": self.hero_power,
             "heroes": self.heroes
         }
 # add any models you may need. 

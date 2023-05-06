@@ -19,28 +19,29 @@ def home():
     return ''
 
 @app.get("/heroes")
-def get_heroes():
+def get_hero():
     heroes = Hero.query.all()
+    print(heroes)
     return [hero.to_dict() for hero in heroes]
 
-app.get("/heroes/<int:id>")
-def get_heroes(id):
-    try:
-        hero =Hero.query.get(id)
-        return hero.to_dict()
+# app.get("/heroes/<int:id>")
+# def get_heroes(id):
+    
+#         hero =Hero.query.get(id)
+#         return hero.to_dict()
     
     
-@app.get("/powers")
-def get_power():
-    powers = Power.query.all()
-    return [power.to_dict() for power in powers]
+# @app.get("/powers")
+# def get_power():
+#     powers = Power.query.all()
+#     return [power.to_dict() for power in powers]
 
-@app.patch("/powers/<int:id>")
-def patch_powers():
+# @app.patch("/powers/<int:id>")
+# def patch_powers():
 
 
-@app.post("/hero_powers")
-def get_powers():
+# @app.post("/hero_powers")
+# def get_powers():
     
 
 
